@@ -338,7 +338,7 @@ function loadTextures(textureLoader, rendererInstance) {
     promises.push(
       new Promise((resolve) => {
         textureLoader.load(
-          `/images/img${i}.jpg`,
+          `${import.meta.env.BASE_URL}images/img${i}.jpg`,
           (texture) => {
             texture.colorSpace = THREE.SRGBColorSpace;
             texture.anisotropy = anisotropy;
