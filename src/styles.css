@@ -26,7 +26,7 @@
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: clip;
+  overflow-x: hidden;
 }
 
 body {
@@ -237,10 +237,21 @@ body.nav-open {
 }
 
 /* ── Hero (sticky + WebGL) ── */
-.hero {
-  position: sticky;
-  top: 0;
+.hero-spacer {
   height: 100vh;
+  height: 100svh;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.hero {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  height: 100svh;
+  z-index: 1;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -393,8 +404,12 @@ body.nav-open {
 /* ── Page stack (slides over hero) ── */
 .page-stack {
   position: relative;
-  z-index: 2;
+  z-index: 10;
   background: var(--bg);
+  border-radius: 32px 32px 0 0;
+  box-shadow: 0 -20px 60px rgba(0,0,0,.4);
+  padding-top: clamp(96px, 14vh, 200px);
+  margin-top: 0;
 }
 
 .section {
@@ -956,4 +971,76 @@ body.nav-open {
   .nav__brand {
     font-size: 17px;
   }
+}
+
+/* ── NEW ANIMATIONS ──────────────────────────────────── */
+
+/* List rows: enhanced hover with accent index + arrow */
+.list-rows__item {
+  transition: padding-left 0.4s ease, background 0.4s ease, border-color 0.4s ease;
+}
+.list-rows__item:hover .list-rows__index {
+  color: var(--accent);
+  transition: color 0.3s ease;
+}
+.list-rows__title {
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.list-rows__title::after {
+  content: '→';
+  font-family: var(--font-body);
+  font-size: 0.7em;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.list-rows__item:hover .list-rows__title::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+.list-rows__item:hover .list-rows__title {
+  color: var(--accent);
+}
+
+/* Apply panel smooth height animation */
+.apply-panel {
+  max-height: none;
+}
+.apply-panel[hidden] {
+  display: none;
+}
+
+/* Char stagger spans — prevent layout shift */
+.section__headline span {
+  display: inline-block;
+}
+
+/* Section label scrub start offset */
+.section__label {
+  will-change: transform;
+}
+
+/* Page-stack top gradient bridge (reinforces JS injection) */
+.page-stack {
+  position: relative;
+}
+
+/* Nav link — ensure relative for underline span */
+.nav__links a {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Scroll indicator pulse on hero */
+.hero__scroll {
+  animation: scrollBounce 2.8s ease-in-out infinite;
+}
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(5px); }
 }
