@@ -524,7 +524,7 @@ function initWebGL() {
 
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(45, state.width / state.height, 0.1, 100);
-  camera.position.set(0, 0, CONFIG.cameraZ + (state.isMobile ? 3 : 0));
+  camera.position.set(0, 0, CONFIG.cameraZ + (state.isMobile ? 1.5 : 0));
 
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -591,7 +591,7 @@ function initWebGL() {
     scrub: 1.5,
     onUpdate: (self) => {
       if (!camera) return;
-      const baseZ = CONFIG.cameraZ + (state.isMobile ? 3 : 0);
+      const baseZ = CONFIG.cameraZ + (state.isMobile ? 1.5 : 0);
       camera.position.z = baseZ - self.progress * 2.5;
     },
   });
@@ -635,7 +635,7 @@ function handleResize() {
   state.height = hero.clientHeight;
   camera.aspect = state.width / state.height;
   camera.updateProjectionMatrix();
-  camera.position.z = CONFIG.cameraZ + (state.isMobile ? 3 : 0);
+  camera.position.z = CONFIG.cameraZ + (state.isMobile ? 1.5 : 0);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(state.width, state.height);
   if (state.isMobile) { state.targetTiltX = 0; state.targetTiltZ = 0; }
